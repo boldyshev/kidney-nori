@@ -1,0 +1,6 @@
+_target_: torch.optim.RMSprop
+params:
+  lr: 1.0e-05
+  weight_decay: 1.0e-08
+  momentum: 0.999
+  foreach: true

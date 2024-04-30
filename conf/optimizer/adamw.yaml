@@ -1,0 +1,3 @@
+_target_: torch.optim.AdamW
+lr: 4e-06
+eps: 1e-05

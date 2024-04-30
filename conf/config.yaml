@@ -1,0 +1,11 @@
+defaults:
+  - _self_
+  - paths: nuclei
+  - optimizer: adamw
+  - loss: bce_logits
+  - scheduler: one_cycle
+
+epochs: 20
+batch_size: 1
+device: cuda
+

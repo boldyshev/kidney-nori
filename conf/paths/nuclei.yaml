@@ -1,0 +1,3 @@
+original_data: .data/16bit_original
+train_data: .data/8bit_nuclei
+checkpoints: .saved_models/unet_nuclei

@@ -1,0 +1,3 @@
+train: data/annotated/channel_2v2/train
+val: data/annotated/channel_2v2/val
+checkpoint: .models/checkpoints

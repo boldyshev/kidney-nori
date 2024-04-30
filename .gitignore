@@ -1,0 +1,5 @@
+.idea*
+.venv
+__pycache_*
+.data/*
+.saved_models/unet_nuclei/*
