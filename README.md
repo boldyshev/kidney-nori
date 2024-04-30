@@ -132,6 +132,8 @@ pip install -r requirements.txt
 
 Download the processed tubules masks and the checkpoint of the pretrained U-Net.
 ```
+mkdir .data
+mkdir -p .saved_models/unet_nuclei
 gdown 1NxfwkW86ZRmplRxdFBI52chAUAFIvzKm -O .data/8bit_nuclei.zip
 unzip .data/8bit_nuclei.zip -d .data 
 gdown 1YlB_sXh9dOP_1rRmQo28SrQDBzWLziaV -O .saved_models/unet_nuclei/unet_nuclei_epoch8.pth
