@@ -119,7 +119,7 @@ those 3-channel masks, given multichannel input, say, protein, lipid and LTL cha
 
 Clone the repository
 ```
-git clone kidney-nori
+git clone git@github.com:boldyshev/kidney-nori.git
 cd kidney-nori
 ```
 
