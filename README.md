@@ -45,15 +45,14 @@ Get predictions for individual tubules:
 After that, insert obtained individual masks on their positions on a bigger image.
 
 **Q:** **If you take into account the imperfection of human manual annotation (missing or inaccurate annotations)**? \
-**A:** Fully annotated tubules for the first image [Fused_S1_1_Mask.png](.data/8bit_nuclei/Fused_S1_1_Mask.png):
+**A:** Fully annotated tubules for the first image [Fused_S1_1_Mask.png](doc/Fused_S1_1_Mask.png):
 
 [//]: # (![Fused_S1_1_Mask.png]&#40;.data/8bit_nuclei/Fused_S1_1_Mask.png&#41;)
 
 <div>
-<img src=".data/8bit_nuclei/Fused_S1_1_Mask.png" width="700"/>
+<img src="doc/Fused_S1_1_Mask.png" width="700"/>
 </div>
 
-The picture above is a semantic segmentation, instance segmentation is in [Fused_S1_1_Mask.tif](.data/8bit_nuclei/Fused_S1_1_Mask.tif) (16bit).
 
 I used [Label Studio](https://labelstud.io/) with SAM backend locally. This tool turned out to be poorly optimized for 
 rendering multiple brush labels. I wrote some scripts that partially helped to overcome this. 
@@ -63,8 +62,8 @@ Tried to connect SAM to the local instance of [CVAT](https://www.cvat.ai/), but 
 
 Removed individual tubules segmentation masks that I considered as artifacts:
 
-|![not_tubules](doc/not_tubules.png)| ![Fused_S1_2_Mask](.data/8bit_nuclei/Fused_S1_2_Mask.png) |
-:-------------------------:|:-------------------------------------------------:|
+|![not_tubules](doc/not_tubules.png)| ![Fused_S1_2_Mask](doc/Fused_S1_2_Mask.png) |
+:-------------------------:|:-------------------------------------------:|
 
 Wrote the method `masks_split_contours` to extract individual tubules instances if they have the same pixel value.
 It's necessary if there are more than 254 masks in original annotations as they are saved in 8 bit (Fused_S10_4):
