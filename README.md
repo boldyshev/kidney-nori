@@ -133,6 +133,8 @@ pip install -r requirements.txt
 ```
 
 Download the processed tubules masks and the checkpoint of the pretrained U-Net.
+Google Drive link to archive with dataset: https://drive.google.com/file/d/1NxfwkW86ZRmplRxdFBI52chAUAFIvzKm/view?usp=drive_link
+Google Drive link to model checkpoint: https://drive.google.com/file/d/1YlB_sXh9dOP_1rRmQo28SrQDBzWLziaV/view?usp=drive_link
 ```
 mkdir .data
 mkdir -p .saved_models/unet_nuclei
