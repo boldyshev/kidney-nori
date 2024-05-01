@@ -6,7 +6,8 @@ This architecture is relatively simple, not very computationally demanding and h
 making it suitable for quickly testing hypotheses. I used the implementation from https://github.com/milesial/Pytorch-UNet
 
 **Q:** **How much training data does that model need?**\
-**A:** I got best results training 8 epochs of 97 images (only Fused_S1_1.tif), so total 776 training samples with rotation augmentation.
+**A:** I achieved the best results by training for 8 epochs using 97 images (only Fused_S1_1.tif), 
+resulting in a total of 776 training samples with rotation augmentation.
 
 **Q:** **If you used some pre-trained model weights?** \
 **A:** No.
@@ -42,10 +43,10 @@ Get predictions for individual tubules:
 | ![cropped_tubule_bbox](doc/cropped_for_prediction.png) | ![cropped_tubule](doc/cropped_mask.png) |
 :------------------------------------------------------:|:---------------------------------------:|
 
-After that, insert obtained individual masks on their positions on a bigger image.
+After that, insert obtained individual masks on their positions on a larger image.
 
 **Q:** **If you take into account the imperfection of human manual annotation (missing or inaccurate annotations)**? \
-**A:** Fully annotated tubules for the first image [Fused_S1_1_Mask.png](doc/Fused_S1_1_Mask.png):
+**A:** I fully annotated tubules for the first image [Fused_S1_1_Mask.png](doc/Fused_S1_1_Mask.png):
 
 [//]: # (![Fused_S1_1_Mask.png]&#40;.data/8bit_nuclei/Fused_S1_1_Mask.png&#41;)
 
@@ -54,19 +55,20 @@ After that, insert obtained individual masks on their positions on a bigger imag
 </div>
 
 
-I used [Label Studio](https://labelstud.io/) with SAM backend locally. This tool turned out to be poorly optimized for 
-rendering multiple brush labels. I wrote some scripts that partially helped to overcome this. 
-Still this tool is unreasonable to use for that kind of task as it becomes very laggy when more than 15 segmentations
-masks are rendered simultaneously. 
-Tried to connect SAM to the local instance of [CVAT](https://www.cvat.ai/), but had no success.
+I used [Label Studio](https://labelstud.io/) with SAM backend locally. 
+However, this tool turned out to be poorly optimized for rendering multiple brush labels. 
+I wrote some scripts that partially helped to overcome this issue. 
+Nevertheless, the tool becomes very laggy when more than 15 segmentation masks are rendered simultaneously, 
+making it unreasonable for such tasks. 
+I attempted to connect SAM to a local instance of [CVAT](https://www.cvat.ai/), but was unsuccessful.
 
-Removed individual tubules segmentation masks that I considered as artifacts:
+I removed individual tubule segmentation masks that I considered to be artifacts:
 
 |![not_tubules](doc/not_tubules.png)| ![Fused_S1_2_Mask](doc/Fused_S1_2_Mask.png) |
 :-------------------------:|:-------------------------------------------:|
 
-Wrote the method `masks_split_contours` to extract individual tubules instances if they have the same pixel value.
-It's necessary if there are more than 254 masks in original annotations as they are saved in 8 bit (Fused_S10_4):
+I wrote the method masks_split_contours to extract individual tubule instances if they have the same pixel value. 
+This is necessary if there are more than 254 masks in the original annotations, as they are saved in 8-bit format (Fused_S10_4).
 <div>
 <img src="doc/nuclei_contours1.png" width="700"/>
 </div>
@@ -80,7 +82,7 @@ image_fp = os.path.join(DATA_DIR, image_name)
 channels = [1, 2, 5] # say, we need protein, lipid and LTL channels
 img = sci.io.imread(image_fp)[channels]
 ```
-The model will have to be retrained with corresponding number of input channels:
+The model will need to be retrained with the corresponding number of input channels:
 ```python
 model = Unet(img.shape[0], 1)
 ...
@@ -92,28 +94,29 @@ though I haven't tested other channels and combinations.
 
 **Q:** **Which accuracy metrics you used and why, and what are the resulting metrics' values of your model?** \
 **A:** Average dice coefficient over evaluation samples. It is widely used to measure pixel-wise agreement between 
-a predicted segmentation and its corresponding ground truth. The best epoch showed ~0.79 Dice score.
+a predicted segmentation and its corresponding ground truth. The best epoch showed a Dice score of approximately 0.79.
 However, I noticed that this metric didn't correspond well with the actual accuracy of predicted mask that I observed by eye.
-I shall investigate this issue.
+I plan to investigate this issue.
 
 **Q:** **What are your suggestions on how you could further improve your model and how we could improve the annotation?** \
 **A:** My suggestion is to improve tubules annotation quality using SAM pretrained model and nuclei annotations using the above U-Net 
 model. 
 I plan to:
-- draw bboxes for already annotated (automatically, using available masks) and missing tubules (manually, using CVAT)
-- predict masks with pretrained SAM using those bboxes as prompts
-- convert SAM predicted masks to CVAT format
-- manually fix the inaccuracies of SAM predictions.
+- Draw bounding boxes for already annotated (automatically, using available masks) and missing tubules (manually, using CVAT).
+- Predict masks with pretrained SAM using those bboxes as prompts.
+- Convert SAM predicted masks to CVAT format.
+- Manually correct any inaccuracies in the SAM predictions.
 
 Example of SAM predictions with bboxes as prompts:
 <div>
 <img src="doc/sam_bboxes.png" width="700"/>
 </div>
 
-The same can be done for nuclei and brushes. 
-Having 3-channel masks (tubules, nuclei, brushes) for images we could finetune SAM 
-(and also test some other architecture, e.g. Detectron2, Mask R-CNN, U-Net from Cellpose) end-to-end to predict 
-those 3-channel masks, given multichannel input, say, protein, lipid and LTL channels
+The same approach can be applied to nuclei and brushes. 
+By having three-channel masks (for tubules, nuclei, and brushes) for images, we could finetune SAM 
+(and also test other architectures such as Detectron2 or pretrained U-Net from Cellpose) 
+end-to-end to predict these three-channel masks. 
+This could be achieved given a multichannel input, for example, protein, lipid, and LTL channels.
 
 ## Installation
 
