@@ -67,7 +67,7 @@ I removed individual tubule segmentation masks that I considered to be artifacts
 |![not_tubules](doc/not_tubules.png)| ![Fused_S1_2_Mask](doc/Fused_S1_2_Mask.png) |
 :-------------------------:|:-------------------------------------------:|
 
-I wrote the method masks_split_contours to extract individual tubule instances if they have the same pixel value. 
+I wrote the method `masks_split_contours` to extract individual tubule instances if they have the same pixel value. 
 This is necessary if there are more than 254 masks in the original annotations, as they are saved in 8-bit format (Fused_S10_4).
 <div>
 <img src="doc/nuclei_contours1.png" width="700"/>
