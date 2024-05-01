@@ -112,11 +112,10 @@ Example of SAM predictions with bboxes as prompts:
 <img src="doc/sam_bboxes.png" width="700"/>
 </div>
 
-The same approach can be applied to nuclei and brushes. 
-By having three-channel masks (for tubules, nuclei, and brushes) for images, we could finetune SAM 
-(and also test other architectures such as Detectron2 or pretrained U-Net from Cellpose) 
-end-to-end to predict these three-channel masks. 
-This could be achieved given a multichannel input, for example, protein, lipid, and LTL channels.
+The same can be done for nuclei and brushes. 
+Having 3-channel masks (tubules, nuclei, brushes) for images we could finetune SAM 
+(and also test some other architecture, e.g. Detectron2, Mask R-CNN, U-Net from Cellpose) end-to-end to predict 
+those 3-channel masks, given multichannel input, say, protein, lipid and LTL channels
 
 ## Installation
 
